@@ -1,0 +1,25 @@
+on:
+  push:
+    branches: gh-pages
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      deployments: write
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: set-up quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: render quarto project
+        uses: quarto-dev/quarto-actions/render@v2
+
+      - name: publish to github pages
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+          path: docs
